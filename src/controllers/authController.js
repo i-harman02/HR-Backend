@@ -40,4 +40,17 @@ const login = async (req, res) => {
   res.json({ message: "User login successfully.", token, user });
 };
 
-export { register, login };
+const getUser = async (req, res) => {
+  try {
+    const user = await User.find({})
+      .select("_id name email role");
+    return res
+      .status(201)
+      .json({ message: "User List fetched successfully.", data: user });
+  } catch (error) {
+    console.error("Error in get user", error.message);
+    return res.status(500).json({ message: "Internal Server Error." });
+  }
+};
+
+export { register, login, getUser };
