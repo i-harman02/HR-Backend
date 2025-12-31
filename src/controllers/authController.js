@@ -4,7 +4,7 @@ import User from "../models/userModel.js";
 
 const register = async (req, res) => {
   const { name, email, password, role } = req.body;
-  if (!name || !email || !password || !role) {
+  if (!name || !email || !password ) {
     return res.status(400).json({ message: "All Fields are required." });
   }
   const existingUser = await User.findOne({ email });
@@ -35,7 +35,9 @@ const login = async (req, res) => {
     { id: user._id, role: user.role },
     process.env.JWT_SECRET,
     { expiresIn: "1d" }
+    
   );
+
 
   res.json({ message: "User login successfully.", token, user });
 };
